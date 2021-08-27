@@ -12,6 +12,9 @@ namespace AppBarbearia.Controllers
     {
         clCliente modCliente = new clCliente();
         clClienteAcoes acCliente = new clClienteAcoes();
+
+        clBarbeiro modBarbeiro = new clBarbeiro();
+        clBarbeiroAcoes acBarbeiro = new clBarbeiroAcoes();
         public ActionResult Index()
         {
             return View();
@@ -31,8 +34,21 @@ namespace AppBarbearia.Controllers
             modCliente.celularCli = frm["txtCelular"];
             modCliente.EmailCli = frm["txtEmail"];
 
-            acCliente.inserirPaciente(modCliente);
+            acCliente.inserirCliente(modCliente);
 
+            ViewBag.msg = "Cadastro Realizado com sucesso!";
+            return View();
+        }
+        public ActionResult cadBarb()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult cadBarb(FormCollection frm)
+        {
+
+            modBarbeiro.nomeBarbeiro = frm["txtBarbeiro"];
+            acBarbeiro.inserirBarb(modBarbeiro);
             ViewBag.msg = "Cadastro Realizado com sucesso!";
             return View();
         }

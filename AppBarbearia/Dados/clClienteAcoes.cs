@@ -10,7 +10,7 @@ namespace AppBarbearia.Dados
     public class clClienteAcoes
     {
         Conexao con = new Conexao();
-        public void inserirPaciente(clCliente cm)
+        public void inserirCliente(clCliente cm)
         {
             MySqlCommand cmd = new MySqlCommand("insert into tbCliente (nomeCLi, telefoneCli, celularCli, EmailCli ) values (@nomeCLi, @telefoneCli, @celularCli, @EmailCli)", con.MyConectarBD()); // @: PARAMETRO
 
