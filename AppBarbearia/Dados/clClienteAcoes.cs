@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -21,6 +22,16 @@ namespace AppBarbearia.Dados
 
             cmd.ExecuteNonQuery();
             con.MyDesConectarBD();
+        }
+
+        public DataTable consultaCli()
+        {
+            MySqlCommand cmd = new MySqlCommand("select * from tbCliente", con.MyConectarBD());
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable Cliente = new DataTable();
+            da.Fill(Cliente);
+            con.MyDesConectarBD();
+            return Cliente;
         }
     }
 }

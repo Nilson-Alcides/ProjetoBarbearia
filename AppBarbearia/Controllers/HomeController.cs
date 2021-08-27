@@ -2,9 +2,12 @@
 using AppBarbearia.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace AppBarbearia.Controllers
 {
@@ -50,6 +53,18 @@ namespace AppBarbearia.Controllers
             modBarbeiro.nomeBarbeiro = frm["txtBarbeiro"];
             acBarbeiro.inserirBarb(modBarbeiro);
             ViewBag.msg = "Cadastro Realizado com sucesso!";
+            return View();
+        }
+        public ActionResult ConsultaClientes()
+        {
+            clClienteAcoes ac = new clClienteAcoes();
+            GridView dgv = new GridView(); // Instância para a tabela
+            dgv.DataSource = ac.consultaCli(); //Atribuir ao grid o resultado da consulta
+            dgv.DataBind(); //Confirmação do Grid
+            StringWriter sw = new StringWriter(); //Comando para construção do Grid na tela
+            HtmlTextWriter htw = new HtmlTextWriter(sw); //Comando para construção do Grid na tela
+            dgv.RenderControl(htw); //Comando para construção do Grid na tela
+            ViewBag.GridViewString = sw.ToString(); //Comando para construção do Grid na tela
             return View();
         }
 

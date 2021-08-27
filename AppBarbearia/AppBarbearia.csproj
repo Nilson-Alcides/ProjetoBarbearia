@@ -170,6 +170,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\cadCliente.cshtml" />
     <Content Include="Views\Home\cadBarb.cshtml" />
+    <Content Include="Views\Home\ConsultaClientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
