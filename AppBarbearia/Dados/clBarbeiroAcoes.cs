@@ -13,9 +13,9 @@ namespace AppBarbearia.Dados
 
         public void inserirBarb(clBarbeiro cm)
         {
-            MySqlCommand cmd = new MySqlCommand("insert into tbBarbeiro (nomeBarbeiro ) values (@nomeBarbeiro )", con.MyConectarBD()); // @: PARAMETRO
+            MySqlCommand cmd = new MySqlCommand("insert into tbBarbeiro (nomeBarbeiro ) values (@nomeBarbeiro)", con.MyConectarBD()); // @: PARAMETRO
 
-            cmd.Parameters.Add("@nomeBarbeiro ", MySqlDbType.VarChar).Value = cm.nomeBarbeiro;
+            cmd.Parameters.Add("@nomeBarbeiro", MySqlDbType.VarChar).Value = cm.nomeBarbeiro;
 
             cmd.ExecuteNonQuery();
             con.MyDesConectarBD();
