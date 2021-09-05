@@ -1,0 +1,31 @@
+﻿@model AppBarbearia.Models.clAtendimento
+@{
+    ViewBag.Title = "consAgendaBuscaData";
+}
+
+<h2>Consultar por Data</h2>
+
+@using (Html.BeginForm("Agendamento"))
+{
+    <div>Data do Atendimento</div>
+
+    <div class="editor-field">
+        @Html.EditorFor(m => m.dataAtend, new { htmlAttributes = new { @type = "date" } })
+    </div>
+
+    <br />
+
+    <div>
+        <input class="btn-warning" type="submit" value="Pesquisar" />
+    </div>
+
+    <br />
+}
+
+
+@Html.Raw(ViewBag.GridViewString)
+
+<br />
+
+@Html.ActionLink("Voltar", "cadAtendimento", "Home", null, new { @class = "btn btn-primary" })
+

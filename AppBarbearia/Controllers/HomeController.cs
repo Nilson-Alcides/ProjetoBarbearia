@@ -74,6 +74,37 @@ namespace AppBarbearia.Controllers
 
             ViewBag.cli = new SelectList(clientes, "Value", "Text");
         }
+
+
+        public ActionResult consAgenda()
+        {
+            GridView gvAtend = new GridView();
+            gvAtend.DataSource = acAtend.selecionaAgenda();
+            gvAtend.DataBind();
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+            gvAtend.RenderControl(htw);
+            ViewBag.GridViewString = sw.ToString();
+            return View();
+        }
+        public ActionResult consAgendaBuscaData()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult consAgendaBuscaData(clAtendimento modeloAtend)
+        {
+            GridView gvAtend = new GridView();
+            gvAtend.DataSource = acAtend.selecionaAgendaData(modeloAtend);
+            gvAtend.DataBind();
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+            gvAtend.RenderControl(htw);
+            ViewBag.GridViewString = sw.ToString();
+            return View();
+
+        }
+
         public ActionResult Index()
         {
             return View();

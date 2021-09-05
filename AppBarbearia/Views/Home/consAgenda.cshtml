@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Agenda";
+}
+
+<h2>Agenda</h2>
+
+@Html.Raw(ViewBag.GridViewString)
+
+<br />
+@Html.ActionLink("Voltar", "cadAtendimento", "Home", null, new { @class = "btn btn-primary" })
