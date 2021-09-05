@@ -1,0 +1,51 @@
+﻿
+@model AppBarbearia.Models.clAtendimento
+
+
+@{
+    /**/
+
+    ViewBag.Title = "Agendamento";
+}
+
+<h2>Agendamento</h2>
+
+@using (Html.BeginForm("Agendamento"))
+{
+    <div>Data do Atendimento</div>
+
+    <div class="editor-field">
+        @Html.EditorFor(m => m.dataAtend, new { htmlAttributes = new { @type = "date" } })
+    </div>
+
+    <br />
+
+    <div>Hora do Atendimento</div>
+
+    <div class="editor-field">
+        @Html.EditorFor(m => m.horaAtend, new { htmlAttributes = new { @type = "time" } })
+    </div>
+
+    <br />
+
+    <div class="editor-field">
+        @Html.DropDownList("barb", "Escolha o Barbeiro")
+    </div>
+
+    <br />
+
+    <div class="editor-field">
+        @Html.DropDownList("cli", "Escolha o Cliente")
+    </div>
+
+    <br />
+
+    <div>
+        <input class="btn-primary" type="submit" value="Agendar" />
+    </div>
+}
+
+
+@ViewBag.msg
+<br />
+@Html.ActionLink("Listar agenda", "consAgenda", "Home", null, new { @class = "btn btn-primary" })

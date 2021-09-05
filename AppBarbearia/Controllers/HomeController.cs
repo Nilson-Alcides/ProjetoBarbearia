@@ -1,5 +1,6 @@
 ﻿using AppBarbearia.Dados;
 using AppBarbearia.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,61 @@ namespace AppBarbearia.Controllers
 
         clBarbeiro modBarbeiro = new clBarbeiro();
         clBarbeiroAcoes acBarbeiro = new clBarbeiroAcoes();
+
+        clAtendimentoAcoes acAtend = new clAtendimentoAcoes();
+
+
+
+        //Carrega barbeiro 
+        public void carregarBarbeiro()
+        {
+            List<SelectListItem> babeiros = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;port=3307; DataBase=BdBarbearia; user id=root;password=361190"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from tbBarbeiro", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    babeiros.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+
+            }
+
+            ViewBag.barb = new SelectList(babeiros, "Value", "Text");
+        }
+        //Carrega Cliente do Barbeiro
+        public void carregarClientes()
+        {
+            List<SelectListItem> clientes = new List<SelectListItem>();
+
+            using (MySqlConnection con = new MySqlConnection("Server=localhost;port=3307; DataBase=BdBarbearia; user id=root;password=361190"))
+            {
+                con.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from tbCliente", con);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    clientes.Add(new SelectListItem
+                    {
+                        Text = rdr[1].ToString(),
+                        Value = rdr[0].ToString()
+                    });
+                }
+                con.Close();
+
+            }
+
+            ViewBag.cli = new SelectList(clientes, "Value", "Text");
+        }
         public ActionResult Index()
         {
             return View();
@@ -65,6 +121,34 @@ namespace AppBarbearia.Controllers
             HtmlTextWriter htw = new HtmlTextWriter(sw); //Comando para construção do Grid na tela
             dgv.RenderControl(htw); //Comando para construção do Grid na tela
             ViewBag.GridViewString = sw.ToString(); //Comando para construção do Grid na tela
+            return View();
+        }
+
+        public ActionResult cadAtendimento()
+        {
+            carregarBarbeiro();
+            carregarClientes();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult cadAtendimento(clAtendimento modeloAtend)
+        {
+
+            carregarBarbeiro();
+            carregarClientes();
+            acAtend.TestarAgenda(modeloAtend);
+
+            if (modeloAtend.confAgendamento == "1")
+            {
+                modeloAtend.codCli = Request["cli"];
+                modeloAtend.codBarbeiro = Request["barb"];
+                acAtend.inserirAgenda(modeloAtend);
+                ViewBag.msg = "Agendamento realizado com sucesso";
+            }
+            else
+            {
+                ViewBag.msg = "Horário indisponível, por favor escolaher outra data/hora";
+            }
             return View();
         }
 
